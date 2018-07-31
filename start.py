@@ -13,8 +13,11 @@ def send_message(userID):
 
 def show_users(groupID):
 	users = vk_api.groups.getMembers(group_id = groupID, sort = 'id_asc')
-	print(users)
 	return users
+
+def show_banned(groupID):
+	banned_users = vk_api.groups.getBanned(group_id = groupID)
+	return banned_users
 
 session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = permissions)
 
