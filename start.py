@@ -20,7 +20,7 @@ def show_banned(groupID):
 	return banned_users['items']
 
 session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = permissions)
-
+#?
 vk_api = vk.API(session, v = version, scope = permissions)
 
 base_users = show_users(test_group_id)
