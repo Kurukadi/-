@@ -17,7 +17,7 @@ def show_users(groupID):
 
 def show_banned(groupID):
 	banned_users = vk_api.groups.getBanned(group_id = groupID)
-	return banned_users
+	return banned_users[items]
 
 session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = permissions)
 
@@ -28,7 +28,6 @@ base_count_of_members = base_users['count']
 
 
 while True:
-	time.sleep(half_an_hour)
 
 	black_list = []
 
@@ -47,4 +46,14 @@ while True:
 	base_users = show_users(test_group_id)
 	base_count_of_members = base_users['count']
 
+	banned_users = show_banned(test_group_id)
+	for i in range (len(black_list)):
+		for j in range (len(banned_users):
+			if black_list[i] == banned_users[j]:
+				black_list.remove[i]
+
+	for i in range(len(black_list)):
+		send_message(black_list[i])
+
+	time.sleep(60)
 	#Проанализируй тех кто в белклисте и забаненых, вычеркни тех, кто в забанненых
