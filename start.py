@@ -4,12 +4,10 @@ from keys import *
 
 version = '5.50'
 
-permissions = ['messages', 'groups']
-
-half_an_hour = 1800
+sixhour = 21600
 
 def send_message(userID):
-	vk_api.messages.send(user_id = userID, message ='check')
+	vk_api.messages.send(user_id = userID, message ='', attachment = we_know)
 
 def show_users(groupID):
 	users = vk_api.groups.getMembers(group_id = groupID, sort = 'id_asc')
@@ -17,11 +15,15 @@ def show_users(groupID):
 
 def show_banned(groupID):
 	banned_users = vk_api.groups.getBanned(group_id = groupID)
+	print('Забаненные:')
+	print(banned_users['items'])
 	return banned_users['items']
 
-session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = permissions)
+session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = 'messages, groups')
 #?
-vk_api = vk.API(session, v = version, scope = permissions)
+vk_api = vk.API(session, v = version)
+
+print('Авторизация прошла успешно')
 
 base_users = show_users(test_group_id)
 base_count_of_members = base_users['count']
@@ -48,10 +50,10 @@ while True:
 	banned_users = show_banned(test_group_id)
 	for i in range (len(black_list)):#проверка тех кто отсутствует в банлисте
 		for j in range (len(banned_users)):
-			if black_list[i] == banned_users[j]:
-				black_list.remove[i]
+			if black_list[i] == banned_users[j]['id']:
+				black_list.remove(black_list[i])
 
 	for i in range(len(black_list)):
 		send_message(black_list[i])
 
-	time.sleep(60)
+	time.sleep(sixhour)
