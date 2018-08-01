@@ -17,38 +17,37 @@ def show_users(groupID):
 
 def show_banned(groupID):
 	banned_users = vk_api.groups.getBanned(group_id = groupID)
-	return banned_users[items]
+	return banned_users['items']
 
 session = vk.AuthSession(app_id = bot_app_id, user_login = bot_login, user_password = bot_password, scope = permissions)
 
-vk_api = vk.API(session, v = version)
+vk_api = vk.API(session, v = version, scope = permissions)
 
 base_users = show_users(test_group_id)
 base_count_of_members = base_users['count']
-
 
 while True:
 
 	black_list = []
 
 	actualy_users = show_users(test_group_id)
-	actualy_count_of_members = actu_users['count']
+	actualy_count_of_members = actualy_users['count']
 
 	for i in range(base_count_of_members):
 		check = False
 		for j in range(actualy_count_of_members):
 			#Каждый из base должен быть в actualy
-			if base_users[items][i] == actualy_users[items][j]:
+			if base_users['items'][i] == actualy_users['items'][j]:
 				check = True
 		if check == False:
-			black_list.add(base_users[items][i])
+			black_list.append(base_users['items'][i])
 
 	base_users = show_users(test_group_id)
 	base_count_of_members = base_users['count']
 
 	banned_users = show_banned(test_group_id)
-	for i in range (len(black_list)):
-		for j in range (len(banned_users):
+	for i in range (len(black_list)):#проверка тех кто отсутствует в банлисте
+		for j in range (len(banned_users)):
 			if black_list[i] == banned_users[j]:
 				black_list.remove[i]
 
@@ -56,4 +55,3 @@ while True:
 		send_message(black_list[i])
 
 	time.sleep(60)
-	#Проанализируй тех кто в белклисте и забаненых, вычеркни тех, кто в забанненых
